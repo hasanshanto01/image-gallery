@@ -16,6 +16,8 @@ import image9 from "../../assets/img/image-9.webp";
 import image10 from "../../assets/img/image-10.jpeg";
 import image11 from "../../assets/img/image-11.jpeg";
 import ImageCard from "../../components/ImageCard";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 
 const Home = () => {
   const images = [
@@ -67,6 +69,28 @@ const Home = () => {
 
   const [imgList, setImgList] = useState(images);
 
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (!active || !over || active.id === over.id) {
+      return;
+    }
+
+    setImgList((currentItems) => {
+      const currentIndex = currentItems.findIndex(
+        (item) => item.id === active.id
+      );
+      const newIndex = currentItems.findIndex((item) => item.id === over.id);
+
+      const newItems = [...currentItems];
+
+      const [movedItem] = newItems.splice(currentIndex, 1);
+      newItems.splice(newIndex, 0, movedItem);
+
+      return newItems;
+    });
+  };
+
   return (
     <div id="main-container" className="min-h-screen m-10 rounded-md">
       <div className="img-action flex justify-between items-center p-5">
@@ -79,9 +103,16 @@ const Home = () => {
         </button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 p-5">
-        {imgList.map((img, index) => (
-          <ImageCard key={img.id} img={img} index={index}></ImageCard>
-        ))}
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={imgList}>
+            {imgList.map((img, index) => (
+              <ImageCard key={img.id} img={img} index={index}></ImageCard>
+            ))}
+          </SortableContext>
+        </DndContext>
         <div
           id="add-img-container"
           className="flex flex-col justify-center items-center"

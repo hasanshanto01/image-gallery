@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* common style start */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.checkbox-icon {
+  font-size: 24px;
+}
+
+/* common style end */
+
+/* Home page start */
+
+#main-container {
+  background: #ebf5fc;
+}
+
+.img-action {
+  border-bottom: 1px dashed #606060;
+}
+
+#add-img-container {
+  width: 262px;
+  height: 262px;
+  background: #dbdbdb;
+  border: 1px dashed #606060;
+  border-radius: 8px;
+}
+
+.add-img-icon {
+  font-size: 36px;
+}
+
+/* Home page end */
+
+/* ImageCard start */
+
+#card-container {
+  /* width: 280px; */
+  /* height: 280px; */
+  padding: 6px;
+  border-radius: 8px;
+  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
+    inset -5px -5px 5px rgba(255, 255, 255, 0.5),
+    inset 5px 5px 5px rgba(0, 0, 0, 0.05),
+    inset -5px -5px 5px rgba(255, 255, 255, 0.5);
+}
+
+.img-container {
+  /* width: 100%; */
+  /* height: 100%; */
+  border-radius: 8px;
+  /* background: #ebf5fc; */
+  background: #fff;
+  /* object-fit: cover; */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.img-container img {
+  border-radius: 8px;
+}
+
+.img-container:hover {
+  /* background: #000; */
+  opacity: 0.2;
+  transition: opacity 0.3s;
+}
+
+.checkbox-container {
+  display: none;
+  background: red;
+}
+
+.img-container:hover .checkbox-container {
+  display: block;
+}
+
+.checkbox-container:hover {
+  cursor: pointer;
+}
+
+/* ImageCard end */

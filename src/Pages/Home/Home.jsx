@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MdCheckBox, MdOutlineImage } from "react-icons/md";
+import { MdCheckBox } from "react-icons/md";
 import image1 from "../../assets/img/image-1.webp";
 import image2 from "../../assets/img/image-2.webp";
 import image3 from "../../assets/img/image-3.webp";
@@ -14,6 +14,7 @@ import image11 from "../../assets/img/image-11.jpeg";
 import ImageCard from "../../components/ImageCard";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
+import AddImageCard from "../../components/AddImageCard";
 
 const Home = () => {
   const images = [
@@ -173,13 +174,7 @@ const Home = () => {
             ))}
           </SortableContext>
         </DndContext>
-        <div
-          id="add-img-container"
-          className="flex flex-col justify-center items-center"
-        >
-          <MdOutlineImage className="add-img-icon" />
-          <p className="font-semibold">Add Images</p>
-        </div>
+        <AddImageCard></AddImageCard>
       </div>
     </div>
   );

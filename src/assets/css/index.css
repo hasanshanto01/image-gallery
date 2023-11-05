@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 /* common style start */
+
 * {
   margin: 0;
   padding: 0;
@@ -43,8 +44,6 @@
 /* ImageCard start */
 
 #card-container {
-  /* width: 280px; */
-  /* height: 280px; */
   padding: 6px;
   border-radius: 8px;
   box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
@@ -54,12 +53,8 @@
 }
 
 .img-container {
-  /* width: 100%; */
-  /* height: 100%; */
   border-radius: 8px;
-  /* background: #ebf5fc; */
   background: #fff;
-  /* object-fit: cover; */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   opacity: 1;
   transition: opacity 0.3s;
@@ -70,22 +65,27 @@
 }
 
 .img-container:hover {
-  /* background: #000; */
-  opacity: 0.2;
+  opacity: 0.3;
   transition: opacity 0.3s;
+  cursor: move;
 }
 
 .checkbox-container {
   display: none;
-  background: red;
 }
 
-.img-container:hover .checkbox-container {
+#card-container:hover .checkbox-container {
   display: block;
 }
 
 .checkbox-container:hover {
   cursor: pointer;
+}
+
+.hover-effect {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+  cursor: move;
 }
 
 /* ImageCard end */

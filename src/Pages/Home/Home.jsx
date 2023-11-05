@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  MdCheckBoxOutlineBlank,
-  MdCheckBox,
-  MdOutlineImage,
-} from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import { MdCheckBox, MdOutlineImage } from "react-icons/md";
 import image1 from "../../assets/img/image-1.webp";
 import image2 from "../../assets/img/image-2.webp";
 import image3 from "../../assets/img/image-3.webp";
@@ -24,50 +20,62 @@ const Home = () => {
     {
       id: 1,
       path: image1,
+      selected: false,
     },
     {
       id: 2,
       path: image2,
+      selected: false,
     },
     {
       id: 3,
       path: image3,
+      selected: false,
     },
     {
       id: 4,
       path: image4,
+      selected: false,
     },
     {
       id: 5,
       path: image5,
+      selected: false,
     },
     {
       id: 6,
       path: image6,
+      selected: false,
     },
     {
       id: 7,
       path: image7,
+      selected: false,
     },
     {
       id: 8,
       path: image8,
+      selected: false,
     },
     {
       id: 9,
       path: image9,
+      selected: false,
     },
     {
       id: 10,
       path: image10,
+      selected: false,
     },
     {
       id: 11,
       path: image11,
+      selected: false,
     },
   ];
 
   const [imgList, setImgList] = useState(images);
+  const [selectImages, setSelectedImages] = useState([]);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -91,14 +99,58 @@ const Home = () => {
     });
   };
 
+  const handleSelectImg = (img) => {
+    setImgList((currentItems) => {
+      return currentItems.map((item) => {
+        if (item.id === img.id) {
+          const updatedItem = { ...item, selected: !item.selected };
+          return updatedItem;
+        }
+        return item;
+      });
+    });
+
+    setSelectedImages((currentSelectedImages) => {
+      const imageIndex = currentSelectedImages.findIndex(
+        (item) => item.id === img.id
+      );
+      if (imageIndex !== -1) {
+        const updatedSelectedImages = [...currentSelectedImages];
+        updatedSelectedImages.splice(imageIndex, 1);
+        return updatedSelectedImages;
+      } else {
+        return [...currentSelectedImages, img];
+      }
+    });
+  };
+
+  const handleDelete = () => {
+    const newImgList = imgList.filter((item) => !item.selected);
+    setImgList(newImgList);
+    setSelectedImages([]);
+  };
+
+  useEffect(() => {}, [imgList, selectImages]);
+
   return (
     <div id="main-container" className="min-h-screen m-10 rounded-md">
       <div className="img-action flex justify-between items-center p-5">
-        <div className="flex items-center">
-          <MdCheckBoxOutlineBlank className="checkbox-icon" />
-          <h2 className="font-semibold">3 Files Selected</h2>
-        </div>
-        <button className="btn btn-sm btn-outline btn-error">
+        {selectImages.length ? (
+          <div className="flex items-center">
+            <MdCheckBox className="checkbox-icon text-blue-500" />
+            <h2 className="font-semibold">
+              {selectImages.length} {selectImages.length > 1 ? "Files" : "File"}{" "}
+              selected
+            </h2>
+          </div>
+        ) : (
+          <h2 className="font-semibold">Gallery</h2>
+        )}
+
+        <button
+          className="btn btn-sm btn-outline btn-error"
+          onClick={handleDelete}
+        >
           Delete Files
         </button>
       </div>
@@ -107,9 +159,17 @@ const Home = () => {
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <SortableContext items={imgList}>
+          <SortableContext
+            items={imgList}
+            // strategy={verticalListSortingStrategy}
+          >
             {imgList.map((img, index) => (
-              <ImageCard key={img.id} img={img} index={index}></ImageCard>
+              <ImageCard
+                key={img.id}
+                img={img}
+                index={index}
+                handleSelectImg={handleSelectImg}
+              ></ImageCard>
             ))}
           </SortableContext>
         </DndContext>
